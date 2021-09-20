@@ -1,8 +1,10 @@
 package org.adaschool.tdd.repository.document;
 
+import org.adaschool.tdd.controller.weather.dto.WeatherReportDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.util.Date;
 import java.util.Objects;
@@ -23,6 +25,14 @@ public class WeatherReport
     String reporter;
 
     Date created;
+
+    public WeatherReport(WeatherReportDto weatherReportDto){
+        this.geoLocation= weatherReportDto.getGeoLocation();
+        this.temperature= weatherReportDto.getTemperature();
+        this.humidity= weatherReportDto.getHumidity();
+        this.reporter= weatherReportDto.getReporter();
+        this.created=weatherReportDto.getCreated();
+    }
 
     public WeatherReport( GeoLocation geoLocation, double temperature, double humidity, String reporter, Date created )
     {
@@ -69,6 +79,8 @@ public class WeatherReport
         {
             return false;
         }
+
+
         WeatherReport that = (WeatherReport) o;
         return Double.compare( that.temperature, temperature ) == 0 && Double.compare( that.humidity, humidity ) == 0
             && Objects.equals( id, that.id ) && Objects.equals( geoLocation, that.geoLocation ) && Objects.equals(
@@ -79,5 +91,17 @@ public class WeatherReport
     public int hashCode()
     {
         return Objects.hash( id, geoLocation, temperature, humidity, reporter, created );
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherReport{" +
+                "id='" + id + '\'' +
+                ", geoLocation=" + geoLocation +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                ", reporter='" + reporter + '\'' +
+                ", created=" + created +
+                '}';
     }
 }

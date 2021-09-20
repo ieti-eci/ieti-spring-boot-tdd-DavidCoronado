@@ -25,4 +25,5 @@ public class HealthControllerTest
             this.restTemplate.getForObject( "http://localhost:" + port + "/v1/health", String.class ) ).contains(
             "API Working OK!" );
     }
+
 }

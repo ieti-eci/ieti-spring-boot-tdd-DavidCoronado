@@ -14,7 +14,9 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -68,6 +70,49 @@ class MongoWeatherServiceTest
         Assertions.assertThrows( WeatherReportNotFoundException.class, () -> {
             weatherService.findById( weatherReportId );
         } );
+    }
+
+    @Test
+    void nearestWeatherReportFoundTest(){
+
+        double lat = 10.0;
+        double lng = 10.0;
+        GeoLocation location = new GeoLocation( lat, lng );
+        WeatherReport weatherReport = new WeatherReport( location, 35f, 22f, "tester", new Date() );
+
+
+        double lat2 = 15.0;
+        double lng2 = 15.0;
+        GeoLocation location2 = new GeoLocation( lat2, lng2 );
+        WeatherReport weatherReport2 = new WeatherReport( location2, 35f, 22f, "tester", new Date() );
+
+        List<WeatherReport> weatherReports = new ArrayList<>();
+        weatherReports.add(weatherReport);
+        weatherReports.add(weatherReport2);
+
+        when(repository.findAll()).thenReturn(weatherReports);
+
+        double lat3 = 5.0;
+        double lng3 = 5.0;
+        GeoLocation location3 = new GeoLocation( lat3, lng3 );
+
+        Assertions.assertEquals( 1, weatherService.findNearLocation(location3,8).size() );
+    }
+
+    @Test
+    void weatherReportByReporterFoundTest() {
+
+        double lat = 10.0;
+        double lng = 10.0;
+        GeoLocation location = new GeoLocation( lat, lng );
+        WeatherReport weatherReport = new WeatherReport( location, 35f, 22f, "tester", new Date() );
+        List<WeatherReport> weatherReports = new ArrayList<>();
+        weatherReports.add(weatherReport);
+        when( repository.findByReporter( "tester" ) ).thenReturn( weatherReports );
+
+        Assertions.assertEquals(1,weatherService.findWeatherReportsByName("tester").size());
+
+
     }
 
 }

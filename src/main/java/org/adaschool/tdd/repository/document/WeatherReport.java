@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -78,6 +79,8 @@ public class WeatherReport
         {
             return false;
         }
+
+
         WeatherReport that = (WeatherReport) o;
         return Double.compare( that.temperature, temperature ) == 0 && Double.compare( that.humidity, humidity ) == 0
             && Objects.equals( id, that.id ) && Objects.equals( geoLocation, that.geoLocation ) && Objects.equals(
@@ -88,5 +91,17 @@ public class WeatherReport
     public int hashCode()
     {
         return Objects.hash( id, geoLocation, temperature, humidity, reporter, created );
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherReport{" +
+                "id='" + id + '\'' +
+                ", geoLocation=" + geoLocation +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                ", reporter='" + reporter + '\'' +
+                ", created=" + created +
+                '}';
     }
 }

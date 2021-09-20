@@ -74,13 +74,13 @@ class MongoWeatherServiceTest
 
     @Test
     void nearestWeatherReportFoundTest(){
-        String weatherReportId = "awae-asd45-1dsad";
+
         double lat = 10.0;
         double lng = 10.0;
         GeoLocation location = new GeoLocation( lat, lng );
         WeatherReport weatherReport = new WeatherReport( location, 35f, 22f, "tester", new Date() );
 
-        String weatherReportId2 = "awae-asd45-1qwer";
+
         double lat2 = 15.0;
         double lng2 = 15.0;
         GeoLocation location2 = new GeoLocation( lat2, lng2 );
@@ -101,7 +101,7 @@ class MongoWeatherServiceTest
 
     @Test
     void weatherReportByReporterFoundTest() {
-        String weatherReportId = "awae-asd45-1dsad";
+
         double lat = 10.0;
         double lng = 10.0;
         GeoLocation location = new GeoLocation( lat, lng );
